@@ -14,3 +14,4 @@ EXPOSE 6006
 # Command to start the Angular development server
 # CMD ["npm", "run", "start"]
 CMD ["npm", "run", "storybook"]
+
