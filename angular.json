@@ -6,10 +6,9 @@
     "storybook": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
-        "implementation": "collection:component"
+        "@storybook/angular:component": {
+          "generateStories": true
+        }
       },
       "root": "",
       "sourceRoot": "src",

@@ -1,0 +1,9 @@
+<h1 class="h4">
+    <span class="main-title">{{ pageTitle }}</span>
+    <span *ngIf="breadcrumb.length > 0" class="titlebar-separator"> / </span>
+
+    <ng-container *ngFor="let item of breadcrumb; let last = last">
+        <span class="breadcrumb-text">{{ item }}</span>
+        <span *ngIf="!last" class="titlebar-separator"> / </span>
+    </ng-container>
+</h1>

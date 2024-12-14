@@ -1,0 +1,17 @@
+<ng-container *ocI18n="let t">
+    <oc-header-form
+        [errorText]="errorText"
+        [header]="header"
+        [formControlElement]="formControlElement"
+        [coloredErrorLabel]="coloredErrorLabel"
+    >
+    </oc-header-form>
+    <oc-dropdown
+        [data]="data"
+        [selectionTemplate]="selectionTemplate"
+        [itemsTemplate]="itemsTemplate"
+        [(selection)]="selection"
+        (clearSelection)="onClearSelection($event)"
+        (selectionChange)="onSelectionChanged($event)"
+    ></oc-dropdown>
+</ng-container>

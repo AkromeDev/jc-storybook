@@ -1,0 +1,14 @@
+<ng-container *ocI18n="let t">
+    <div class="header-container">
+      <span
+          ngbTooltip="{{errorText}}"
+          placement="right"
+          [ngClass]="{'text-danger': formControlElement?.errors && coloredErrorLabel, 'text-dark': !formControlElement?.errors && !coloredErrorLabel}">
+      {{ header }}</span>
+        <span *ngIf="isRequiredControl"
+              ngbTooltip="{{errorText || t('ims.general.required')}}"
+              placement="right"
+              [ngClass]="{'text-danger': formControlElement?.errors, 'text-dark': !formControlElement?.errors}">
+      *</span>
+    </div>
+</ng-container>

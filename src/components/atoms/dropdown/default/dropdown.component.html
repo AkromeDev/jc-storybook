@@ -1,0 +1,88 @@
+<!-- dropdown.component.html -->
+<ng-container [ngSwitch]="type">
+    <!-- Default Dropdown -->
+    <div *ngSwitchCase="'default'">
+        <div [class]="'dropdown ' + (!variant ? 'is-select' : '')" oc-dropdown>
+            <button [class]="'btn dropdown-toggle ' + (variant ? 'btn-' + variant : '')"
+                    type="button"
+                    aria-expanded="false">
+
+                <!-- Custom Button Content -->
+                <ng-container *ngIf="buttonTemplate">
+                    <ng-container *ngTemplateOutlet="buttonTemplate; context: { $implicit: selection }"></ng-container>
+                </ng-container>
+
+                <!-- Default Button Content -->
+                <ng-container *ngIf="!buttonTemplate">
+          <span class="dropdown-value">
+            <ng-container *ngIf="selectionTemplate && selection">
+              <ng-container *ngTemplateOutlet="selectionTemplate; context: { $implicit: selection }"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="!selectionTemplate">
+              {{ getDisplayValue(selection) || placeholder }}
+            </ng-container>
+          </span>
+                </ng-container>
+
+            </button>
+
+            <div class="dropdown-menu">
+                <ng-container *ngIf="customMenuContent; else defaultMenu">
+                    <ng-container *ngTemplateOutlet="customMenuContent"></ng-container>
+                </ng-container>
+
+                <ng-template #defaultMenu>
+                    <div *ngFor="let item of data" class="dropdown-item" (click)="selectItem(item)">
+                        <ng-container *ngIf="itemsTemplate; else defaultItem">
+                            <ng-container *ngTemplateOutlet="itemsTemplate; context: { $implicit: item }"></ng-container>
+                        </ng-container>
+                        <ng-template #defaultItem>
+                            {{ getDisplayValue(item) }}  <!-- Hier war der Fehler -->
+                        </ng-template>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <button *ngIf="selection && hasClearButton"
+                type="button"
+                class="btn action--btn align-top btn-danger"
+                (click)="onClearSelection($event)">
+            <i style="font-size: 14px;" class="oc-general-cancel"></i>
+        </button>
+    </div>
+
+    <!-- Native Select -->
+    <div *ngSwitchCase="'native'">
+        <div class="form-select-wrapper">
+            <div class="d-flex align-items-center">
+                <select [class]="'form-select ' + (size !== 'md' ? 'form-select-' + size : '')"
+                        (change)="selectItem($any($event.target).value)">
+                    <option value="" disabled selected>{{ placeholder }}</option>
+                    <ng-container *ngIf="customMenuContent; else defaultNativeOptions">
+                        <ng-container *ngTemplateOutlet="customMenuContent"></ng-container>
+                    </ng-container>
+
+                    <ng-template #defaultNativeOptions>
+                        <option *ngFor="let item of data" [value]="item">
+                            <ng-container *ngIf="itemsTemplate; else defaultItem">
+                                <ng-container *ngTemplateOutlet="itemsTemplate; context: { $implicit: item }"></ng-container>
+                            </ng-container>
+                            <ng-template #defaultItem>
+                                {{ getDisplayValue(item) }}  <!-- Hier auch -->
+                            </ng-template>
+                        </option>
+                    </ng-template>
+                </select>
+            </div>
+            <span *ngIf="label" class="option-label">{{ label }}</span>
+        </div>
+
+        <button *ngIf="selection && hasClearButton"
+                type="button"
+                class="btn action--btn align-top btn-danger"
+                (click)="onClearSelection($event)">
+            <i style="font-size: 14px;" class="oc-general-cancel"></i>
+        </button>
+    </div>
+</ng-container>
